@@ -1,0 +1,50 @@
+receiver:
+
+- arithemetic combinator
+  - input from receiver chests and tanks, multiplied by -1
+  - output to filter inserters, pumps, and train station
+- constant combinator
+  - outputs desired item amounts to same output network as arithmetic combinator
+- receiver chests
+  - 6n, where n is number of cargo wagons
+  - storage, hooked to receiver tanks and arithmetic input
+- receiver inserters
+  - 6n, where n is number of cargo wagons
+  - inputs from pumps and output of combinators
+- receiver tanks
+  - 2n, where n is number of fluids
+  - hooked to receiver chests and arithmetic input
+- receiver pump
+  - hooked to receiver inserters and combinator output
+  - activates when (liquid) is greater than (n) (-15k)
+- roboport
+  - read robot statistics
+  - outputs to two inserters
+- roboport inserters
+  - reads construction robots in roboport, less than (n) (50)
+  - reads logistics robots in roboport, less than (n) (50)
+- signals
+  - at end of rail opposite station, 7n+1 where n is total number of train sections
+  - one past station if single ended train
+- rails
+  - 3.5n, where n is cars + locomotives
+  - one additional if single ended train
+- station
+  - enabled when anything is > 0
+  - hooked to combinator output
+
+sender:
+
+- red inserters (4) or blue inserters (2)
+- requesters, one for each unique item type
+- signals
+  - at end of rail opposite station, 7n+1 where n is total number of train sections
+  - one past station if single ended train
+- rails
+  - 3.5n, where n is cars + locomotives
+  - one additional if single ended train
+- station
+  - nothing special
+- trains
+  - locked slots
+  - schedule
