@@ -417,11 +417,11 @@ export function BlueprintString() {
                 Array(j === four - 1 && car.length % 4 !== 0 && four * 4 > car.length ? car.length % 4 : 4).keys()
               ).flatMap((k) => {
                 const stack = car[j * 4 + k];
+                const offset = (cars.slice(0, i).reduce((l, car) => l + car.length, 0) + j * 4 + k) * 2;
 
                 return [
                   {
-                    entity_number:
-                      entities.length + 1 + cars.slice(0, i).reduce((l, car) => l + car.length, 0) + j * 4 + k,
+                    entity_number: entities.length + offset + 1,
                     name: 'long-handed-inserter',
                     position: {
                       x: -5.5 + j - (cars.length - i + (other.dual ? 0 : activeFluids.length)) * 7,
@@ -430,8 +430,7 @@ export function BlueprintString() {
                     direction: k >= 2 ? 4 : 0,
                   },
                   {
-                    entity_number:
-                      entities.length + 1 + cars.slice(0, i).reduce((l, car) => l + car.length, 0) + j * 4 + k,
+                    entity_number: entities.length + offset + 2,
                     name: 'logistic-chest-requester',
                     position: {
                       x: -5.5 + j - (cars.length - i + (other.dual ? 0 : activeFluids.length)) * 7,
@@ -456,18 +455,10 @@ export function BlueprintString() {
           ? Array.from(Array(two).keys()).flatMap((j) =>
               Array.from(Array(j === two - 1 && car.length % 2 !== 0 ? car.length % 2 : 2).keys()).flatMap((k) => {
                 const stack = car[j * 2 + four * 4 + k];
-                if (!stack) {
-                  debugger;
-                }
+                const offset = (cars.slice(0, i).reduce((l, car) => l + car.length, 0) + four * 4 + j * 2 + k) * 2;
                 return [
                   {
-                    entity_number:
-                      entities.length +
-                      1 +
-                      cars.slice(0, i).reduce((l, car) => l + car.length, 0) +
-                      four * 4 +
-                      j * 2 +
-                      k,
+                    entity_number: entities.length + offset + 1,
                     name: 'fast-inserter',
                     position: {
                       x: -5.5 + j + four - (cars.length - i + (other.dual ? 0 : activeFluids.length)) * 7,
@@ -476,13 +467,7 @@ export function BlueprintString() {
                     direction: k >= 1 ? 4 : 0,
                   },
                   {
-                    entity_number:
-                      entities.length +
-                      1 +
-                      cars.slice(0, i).reduce((l, car) => l + car.length, 0) +
-                      four * 4 +
-                      j * 2 +
-                      k,
+                    entity_number: entities.length + offset + 2,
                     name: 'logistic-chest-requester',
                     position: {
                       x: -5.5 + j + four - (cars.length - i + (other.dual ? 0 : activeFluids.length)) * 7,
