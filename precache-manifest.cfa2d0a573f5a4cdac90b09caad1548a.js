@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "65d181f1e3f822d30ae4322430bb6786",
+    "revision": "4b7636a875598ba9ed389f3fb1a8368c",
     "url": "/factorio-engineering-train/index.html"
   },
   {
