@@ -1,4 +1,4 @@
-import { Other as Slice } from '../store/slices/Other';
+import { FuelType, Other as Slice } from '../store/slices/Other';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from '../store/Store';
 import React from 'react';
@@ -21,6 +21,19 @@ export function Other() {
         <option>--</option>
         {Object.keys(StackData).map((k) => (
           <option key={k}>{k}</option>
+        ))}
+      </select>
+      <label htmlFor='fuel'>Fuel</label>
+      <select
+        id='fuel'
+        value={other.fuel}
+        onChange={(e) => dispatch(Slice.actions.setFuel(e.target.value as FuelType | '--'))}
+      >
+        <option>--</option>
+        {Object.entries(FuelType).map(([k, v]) => (
+          <option key={k} value={k}>
+            {v}
+          </option>
         ))}
       </select>
     </div>

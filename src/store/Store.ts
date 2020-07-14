@@ -4,6 +4,7 @@ import pako from 'pako';
 import { Fluids } from './slices/Fluids';
 import { Stacks } from './slices/Stacks';
 import { Other } from './slices/Other';
+import { init } from './Init';
 
 const reducer = combineReducers({
   fluids: Fluids.reducer,
@@ -41,6 +42,8 @@ export const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production',
   preloadedState: loadState(),
 });
+
+store.dispatch(init());
 
 store.subscribe(() => {
   saveState(store.getState());

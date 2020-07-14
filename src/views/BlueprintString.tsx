@@ -4,6 +4,7 @@ import React, { useMemo } from 'react';
 import { Blueprint, BlueprintBook, Entity, Schedule } from '../types/Interfaces';
 import pako from 'pako';
 import StackData from '../data/stacks.json';
+import { FuelType } from '../store/slices/Other';
 
 function chainEntities(entities: Entity[]) {
   entities.slice(1).forEach((entity, i) => {
@@ -93,7 +94,7 @@ export function BlueprintString() {
     activeStacks.forEach((stack) => {
       let carIndex = cars.findIndex((car) => {
         const used = car.reduce((s, existingStack) => s + existingStack[1], 0);
-        // only use the last chest slot if it's an exact match
+        // only use the last chest slot if it's an exact match, otherwise we can't do filler
         return (car.length < 23 && used + stack[1] <= 40) || (car.length === 23 && used + stack[1] === 40);
       });
       if (carIndex === -1) {
@@ -370,20 +371,20 @@ export function BlueprintString() {
     chainEntities(chests);
     chainEntities(pumps);
     chainEntities(tanks);
-    const pump = pumps.slice(-1)[0];
-    const tank = tanks.slice(-1)[0];
-    const inserter = inserters.slice(-1)[0];
-    const chest = chests.slice(-1)[0];
-    if (pump) {
-      connectEntities(tank, arithmeticCombinator, { side2: '1' });
-      connectEntities(pump, arithmeticCombinator, { side2: '2' });
-      if (inserter) {
-        connectEntities(pumps[0], inserter);
-        connectEntities(tanks[0], chest);
+    const lastPump = pumps.slice(-1)[0];
+    const lastTank = tanks.slice(-1)[0];
+    const lastInserter = inserters.slice(-1)[0];
+    const lastChest = chests.slice(-1)[0];
+    if (lastPump) {
+      connectEntities(lastTank, arithmeticCombinator, { side2: '1' });
+      connectEntities(lastPump, arithmeticCombinator, { side2: '2' });
+      if (lastInserter) {
+        connectEntities(pumps[0], lastInserter);
+        connectEntities(tanks[0], lastChest);
       }
-    } else if (inserter) {
-      connectEntities(chest, arithmeticCombinator, { side2: '1' });
-      connectEntities(inserter, arithmeticCombinator, { side2: '2' });
+    } else if (lastInserter) {
+      connectEntities(lastChest, arithmeticCombinator, { side2: '1' });
+      connectEntities(lastInserter, arithmeticCombinator, { side2: '2' });
     }
     return {
       item: 'blueprint',
@@ -512,7 +513,7 @@ export function BlueprintString() {
       entity_number: entities.length + 1 + i,
       name: 'pump',
       position: {
-        x: -0.5 - 7 * (activeFluids.length - i + cars.length),
+        x: -0.5 - 7 * (activeFluids.length - i + (other.dual ? cars.length : 0)),
         y: -4,
       },
       direction: 4,
@@ -572,6 +573,57 @@ export function BlueprintString() {
         orientation: 0.75,
       }))
     );
+    if (other.fuel !== '--') {
+      const fuelId = Object.entries(FuelType).find(([k, v]) => k === other.fuel)?.[1]!;
+      entities.push({
+        entity_number: entities.length + 1,
+        name: 'logistic-chest-requester',
+        position: {
+          x: -3.5,
+          y: -4.5,
+        },
+        request_filters: [
+          {
+            index: 1,
+            name: fuelId,
+            count: StackData[fuelId as keyof typeof StackData] * 3,
+          },
+        ],
+      });
+      entities.push({
+        entity_number: entities.length + 1,
+        name: 'fast-inserter',
+        position: {
+          x: -3.5,
+          y: -3.5,
+        },
+      });
+      if (other.dual) {
+        entities.push({
+          entity_number: entities.length + 1,
+          name: 'logistic-chest-requester',
+          position: {
+            x: -9.5 - (cars.length + activeFluids.length) * 7,
+            y: -4.5,
+          },
+          request_filters: [
+            {
+              index: 1,
+              name: fuelId,
+              count: StackData[fuelId as keyof typeof StackData] * 3,
+            },
+          ],
+        });
+        entities.push({
+          entity_number: entities.length + 1,
+          name: 'fast-inserter',
+          position: {
+            x: -9.5 - (cars.length + activeFluids.length) * 7,
+            y: -3.5,
+          },
+        });
+      }
+    }
     const schedules: Schedule[] = [
       {
         locomotives: [],
@@ -627,7 +679,7 @@ export function BlueprintString() {
           index: 1,
         },
       ],
-      active_index: 1,
+      active_index: 0,
       version: 77311705089,
     }),
     [providerStation, receiverStation]

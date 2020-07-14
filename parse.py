@@ -7,8 +7,6 @@ import json
 output_data = {}
 fluid_data = []
 
-# FIXME: where is "rail"?
-
 # TODO: try to parse the lua? might be tricky
 with open('src/data/recipes.json') as recipes_data:
     recipes = json.load(recipes_data)
@@ -82,6 +80,9 @@ for input_file in glob.glob(os.path.join(sys.argv[1], 'fluid/*.lua')):
             elif auto_barrel_match:
                 if auto_barrel_match.group(1) == 'false' and barrel_name in output_data:
                     del output_data[barrel_name]
+
+# FIXME: where is "rail"?
+output_data['rail'] = 100
 
 with open('src/data/stacks.json', 'w') as output_file:
     json.dump(output_data, output_file, indent=2, sort_keys=True)
