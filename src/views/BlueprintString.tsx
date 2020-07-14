@@ -664,7 +664,7 @@ export function BlueprintString() {
       schedules: schedules,
       version: 77311705089,
     };
-  }, [activeFluids, cars, other.dual]);
+  }, [activeFluids, cars, other.dual, other.fuel]);
   const book: BlueprintBook = useMemo(
     () => ({
       item: 'blueprint-book',
