@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { StoreState } from '../store/Store';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Blueprint, BlueprintBook, Entity, Schedule } from '../types/Interfaces';
 import pako from 'pako';
 import StackData from '../data/stacks.json';
@@ -85,6 +85,7 @@ const twoInserterMap = [-3.5, -0.5];
 const twoChestMap = [-4.5, 0.5];
 
 export function BlueprintString() {
+  const [showUnpacked, setShowUnpacked] = useState(false);
   const { fluids, stacks, other } = useSelector((state: StoreState) => state);
   const activeStacks = useMemo(() => Object.entries(stacks).filter(([_, v]) => v), [stacks]);
   const activeFluids = useMemo(() => Object.entries(fluids).filter(([_, v]) => v), [fluids]);
@@ -693,11 +694,16 @@ export function BlueprintString() {
     <div>
       <h2>Blueprint String</h2>
       <div style={{ border: '1px solid black', wordBreak: 'break-all', textAlign: 'left', margin: '0 100px 20px' }}>
-        {bookstring}
+        <code>{bookstring}</code>
       </div>
-      <div style={{ border: '1px solid black', wordBreak: 'break-all', textAlign: 'left', margin: '0 100px 20px' }}>
-        <pre>{JSON.stringify({ blueprint_book: book }, null, 2)}</pre>
-      </div>
+      <button onClick={() => setShowUnpacked((showUnpacked) => !showUnpacked)}>
+        {showUnpacked ? 'Hide' : 'Show'} Unpacked
+      </button>
+      {showUnpacked && (
+        <div style={{ border: '1px solid black', wordBreak: 'break-all', textAlign: 'left', margin: '0 100px 20px' }}>
+          <pre>{JSON.stringify({ blueprint_book: book }, null, 2)}</pre>
+        </div>
+      )}
     </div>
   );
 }
