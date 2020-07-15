@@ -1,0 +1,28 @@
+.Stacks {
+  display: grid;
+  grid-template-columns: 4fr 1fr 1fr;
+  grid-auto-rows: max-content;
+  grid-column-gap: 8px;
+}
+
+.Stacks h2 {
+  grid-column: span 3;
+  grid-row: span 3;
+}
+
+.Stacks label {
+  font-size: 0.8em;
+  justify-self: right;
+}
+
+.Stacks input {
+  justify-self: right;
+}
+
+.Stacks div {
+  justify-self: left;
+}
+
+.Stacks > * {
+  align-self: center;
+}

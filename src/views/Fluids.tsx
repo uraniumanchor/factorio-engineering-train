@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from '../store/Store';
 import React from 'react';
 
+import './Fluids.css';
+
 export function Fluids() {
   const fluids = useSelector((state: StoreState) => state.fluids);
   const dispatch = useDispatch();
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 40px', gridAutoRows: 20 }}>
-      <h2 style={{ gridColumn: 'span 2', gridRow: 'span 3' }}>Fluids</h2>
+    <div className='Fluids'>
+      <h2>Fluids</h2>
       {Object.entries(fluids).map(([k, v]) => (
         <React.Fragment key={k}>
           <label htmlFor={k}>{k}</label>

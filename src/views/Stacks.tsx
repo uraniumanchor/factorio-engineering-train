@@ -4,6 +4,8 @@ import { StoreState } from '../store/Store';
 import React from 'react';
 import StackData from '../data/stacks.json';
 
+import './Stacks.css';
+
 function bykey([ka, _a]: [string, number], [kb, _b]: [string, number]) {
   return ka.localeCompare(kb);
 }
@@ -12,7 +14,7 @@ export function Stacks() {
   const stacks = useSelector((state: StoreState) => state.stacks);
   const dispatch = useDispatch();
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 40px 80px', gridAutoRows: 20 }}>
+    <div className='Stacks'>
       <h2 style={{ gridColumn: 'span 3', gridRow: 'span 3' }}>Item Stacks</h2>
       {Object.entries(stacks)
         .sort(bykey)

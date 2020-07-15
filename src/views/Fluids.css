@@ -1,0 +1,24 @@
+.Fluids {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  grid-auto-rows: max-content;
+  grid-column-gap: 8px;
+}
+
+.Fluids h2 {
+  grid-column: span 2;
+  grid-row: span 3;
+}
+
+.Fluids label {
+  font-size: 0.8em;
+  justify-self: right;
+}
+
+.Fluids input {
+  justify-self: left;
+}
+
+.Fluids > * {
+  align-self: center;
+}

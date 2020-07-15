@@ -4,12 +4,14 @@ import { StoreState } from '../store/Store';
 import React from 'react';
 import StackData from '../data/stacks.json';
 
+import './Other.css';
+
 export function Other() {
   const other = useSelector((state: StoreState) => state.other);
   const dispatch = useDispatch();
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridAutoRows: 20 }}>
-      <h2 style={{ gridColumn: 'span 2', gridRow: 'span 3' }}>Other</h2>
+    <div className='Other'>
+      <h2>Other</h2>
       <label htmlFor='dual'>Use Dual-Headed</label>
       <input id='dual' type='checkbox' checked={other.dual} onChange={() => dispatch(Slice.actions.toggleDual())} />
       <label htmlFor='filler'>Filler</label>
