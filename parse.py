@@ -81,8 +81,9 @@ for input_file in glob.glob(os.path.join(sys.argv[1], 'fluid/*.lua')):
                 if auto_barrel_match.group(1) == 'false' and barrel_name in output_data:
                     del output_data[barrel_name]
 
-# FIXME: where is "rail"?
+# FIXME: these are not getting parsed properly
 output_data['rail'] = 100
+output_data['pump'] = 50
 
 with open('src/data/stacks.json', 'w') as output_file:
     json.dump(output_data, output_file, indent=2, sort_keys=True)

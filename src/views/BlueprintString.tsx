@@ -104,14 +104,16 @@ export function BlueprintString() {
       }
       cars[carIndex].push(stack);
     });
-    return cars;
-  }, [activeStacks]);
-  cars.forEach((car) => {
-    const left = 40 - car.reduce((s, existingStack) => s + existingStack[1], 0);
-    if (left > 0 && car.length < 24) {
-      car.push([other.filler, left]);
+    if (other.filler !== '--') {
+      cars.forEach((car) => {
+        const left = 40 - car.reduce((s, existingStack) => s + existingStack[1], 0);
+        if (left > 0 && car.length < 24) {
+          car.push([other.filler, left]);
+        }
+      });
     }
-  });
+    return cars;
+  }, [activeStacks, other.filler]);
   const receiverStation: Blueprint = useMemo(() => {
     let entities: Entity[] = [];
     const trainStop: Entity = {
