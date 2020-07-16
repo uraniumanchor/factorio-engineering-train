@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "63cd3469d577bfebd43fb422f494b727",
+    "revision": "b85d5ee8b6805fe36aaf98bd676c30d4",
     "url": "/factorio-engineering-train/index.html"
   },
   {
-    "revision": "aee9d18b432b96d386cf",
+    "revision": "581cfbabb235d019b11f",
     "url": "/factorio-engineering-train/static/css/main.d2ebe2f3.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/factorio-engineering-train/static/js/2.f450b0b8.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "aee9d18b432b96d386cf",
-    "url": "/factorio-engineering-train/static/js/main.78ca0678.chunk.js"
+    "revision": "581cfbabb235d019b11f",
+    "url": "/factorio-engineering-train/static/js/main.9f7689a2.chunk.js"
   },
   {
     "revision": "c288de9fb1ad5a54a345",
