@@ -22,7 +22,7 @@ export const Stacks = createSlice({
   extraReducers: (builder) =>
     builder.addCase(init, (state) => {
       Object.keys(StackData).forEach(
-        (stack) => (state[stack as keyof typeof StackData] = state[stack as keyof typeof StackData] || 0)
+        (stack) => (state[stack as keyof typeof StackData] = Math.max(state[stack as keyof typeof StackData], 0) || 0)
       );
       Object.keys(state).forEach((stack) => {
         if (!StackData[stack as keyof typeof StackData]) {

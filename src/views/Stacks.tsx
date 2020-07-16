@@ -26,6 +26,7 @@ export function Stacks() {
               id={k}
               type='number'
               value={v}
+              min={0}
               onChange={(e) =>
                 dispatch(Slice.actions.setValue({ name: k as keyof typeof stacks, value: +e.target.value }))
               }
